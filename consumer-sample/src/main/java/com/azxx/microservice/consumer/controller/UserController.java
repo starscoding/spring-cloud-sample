@@ -21,7 +21,15 @@ public class UserController {
 
     @GetMapping("/user/{id}")
     public User findById(@PathVariable Long id){
-        String url = "http://localhost:8080/user/1";
+        String url = "http://127.0.0.1:8080/user/1";
+        User user = restTemplate.getForObject(url,User.class);
+        log.info("user:{}",user);
+        return user;
+    }
+
+    @GetMapping("/ribbon/user/{id}")
+    public User findById2(@PathVariable Long id){
+        String url = "http://provider/user/1";
         User user = restTemplate.getForObject(url,User.class);
         log.info("user:{}",user);
         return user;
