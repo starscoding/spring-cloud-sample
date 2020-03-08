@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author xuzheng
  * @since 2020/3/7 22:42
  */
-@FeignClient(name = "provider",configuration = FeignConfig.class)
+@FeignClient(name = "provider",configuration = FeignConfig.class,fallback = UserFeignFallback.class)
 public interface UserFeignClient {
 
     @GetMapping("/user/{id}")
