@@ -1,6 +1,7 @@
 package com.azxx.microservice.consumer.controller;
 
 import com.azxx.microservice.consumer.entity.User;
+import com.azxx.microservice.consumer.feign.UserFeignClient;
 import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class UserController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private UserFeignClient userFeignClient;
+
 
     @GetMapping("/user/{id}")
     public User findById(@PathVariable Long id){
@@ -32,6 +36,13 @@ public class UserController {
         String url = "http://provider/user/1";
         User user = restTemplate.getForObject(url,User.class);
         log.info("user:{}",user);
+        return user;
+    }
+
+    @GetMapping("/feign/user/{id}")
+    public User findByIdFeign(@PathVariable Long id){
+        User user = userFeignClient.findById(id);
+        log.info("feign user:{}",user);
         return user;
     }
 
